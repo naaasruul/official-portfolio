@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@import "flowbite/src/themes/default";
+@plugin "flyonui";
+@import "flyonui/variants.css";
+
+@font-face {
+  font-family: Melete;
+  font-style: normal;
+  src: url("assets/fonts/Melete/Melete-Regular.otf") format("opentype");
+}
+
+@custom-variant dark (&:where(.dark, .dark *));  /*  To Enable Dark Mode */
+
+@theme{
+  --font-display: 'Melete';
+}
