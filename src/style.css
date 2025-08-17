@@ -4,14 +4,20 @@
 @plugin "flyonui";
 @import "flyonui/variants.css";
 
+/* @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap'); */
+
 @font-face {
-  font-family: Melete;
+  font-family: Figtree;
   font-style: normal;
-  src: url("assets/fonts/Melete/Melete-Regular.otf") format("opentype");
+  src: url("assets/fonts/Figtree/Figtree-Regular.ttf") format("truetype");
 }
 
 @custom-variant dark (&:where(.dark, .dark *));  /*  To Enable Dark Mode */
 
 @theme{
-  --font-display: 'Melete';
+  --font-display: 'Figtree';
+}
+
+html {
+  @apply font-display;
 }
