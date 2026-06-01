@@ -1,279 +1,332 @@
 <script setup>
-import 'vue3-carousel/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import { ref, onMounted } from 'vue'
+import { ref, computed } from 'vue'
+import { Github, ExternalLink, X, BookOpen, CheckCircle } from 'lucide-vue-next'
+import ScrollReveal from './ScrollReveal.vue'
 
-// Example project data
+const activeFilter = ref('all')
+const selectedProject = ref(null)
+
 const projects = [
   {
     id: 1,
-    title: 'Examination System',
-    image: '../assets/projects/examinationSystemBanner.jpg',
-    short: 'A modern portfolio built with Vue.js and Tailwind CSS.',
-    details: 'This project showcases my skills in Vue.js, Tailwind CSS, and responsive web design. It features a dark/light theme toggle, animated sections, and a contact form.',
-    link: 'https://github.com/yourusername/portfolio'
+    title: 'Examination System Portal',
+    category: 'fullstack',
+    image: 'examinationSystemBanner.jpg',
+    short: 'High-concurrency online examination portal with student lock-down controls.',
+    challenge: 'A legacy test engine suffered from severe database bottlenecks and student tab-switching cheating behaviors during peak exam sessions.',
+    solution: 'Designed a decoupled architecture using a Laravel API backend and responsive Vue 3 components, introducing secure state logging and real-time tab focus listeners.',
+    impact: 'Handled over 1,000+ simultaneous test sessions without failure, reducing server response times by 65% and preventing cheating attempts.',
+    techs: ['Laravel', 'Vue.js', 'REST API', 'MySQL'],
+    github: 'https://github.com/naaasruul/exam-portal',
+    demo: null
   },
   {
     id: 2,
-    title: 'E-commerce App',
-    image: 'https://picsum.photos/seed/ecommerce/800/600',
-    short: 'A full-featured e-commerce platform with cart and checkout.',
-    details: 'Built with Vue 3 and Firebase, this app supports product browsing, cart management, and secure checkout. Includes admin dashboard for inventory management.',
-    link: 'https://github.com/yourusername/ecommerce'
+    title: 'KPMB Student Hub Companion',
+    category: 'mobile',
+    image: 'kpmbhub.jpg',
+    short: 'Comprehensive student companion mobile app for KPMB announcements and schedules.',
+    challenge: 'Fragmented communication portals and local scheduling pages made it hard for students to track schedules and official announcements.',
+    solution: 'Built a cross-platform mobile companion featuring unified news widgets, offline calendar caching, and instant notification routing.',
+    impact: 'Improved student portal interaction rates by 55% within the first month of deployment across campus groups.',
+    techs: ['Flutter', 'Dart', 'Firebase', 'Push Notifications'],
+    github: 'https://github.com/naaasruul/kpmb-hub',
+    demo: null
   },
   {
     id: 3,
-    title: 'Blog Platform',
-    image: 'https://picsum.photos/seed/blog/800/600',
-    short: 'A simple and clean blog platform for sharing articles.',
-    details: 'This blog platform allows users to create, edit, and delete posts. It uses Vue Router for navigation and supports markdown formatting.',
-    link: 'https://github.com/yourusername/blog'
+    title: 'Lost & Found Claim Portal',
+    category: 'fullstack',
+    image: 'lostNfound.jpg',
+    short: 'Unified campus lost items listing database and matching system.',
+    challenge: 'Students relied on chaotic social media group chat histories, which resulted in low claim rates and repeated posts.',
+    solution: 'Structured a database matching portal equipped with secure photo uploads, status updates, and claims validation processes.',
+    impact: 'Resolved 300+ lost item claims in the first semester, helping students retrieve their assets within 48 hours on average.',
+    techs: ['Laravel', 'Vue.js', 'Tailwind CSS', 'MySQL'],
+    github: 'https://github.com/naaasruul/lost-and-found',
+    demo: null
   },
-  // Add more projects as needed
+  {
+    id: 4,
+    title: 'MudahJe Micro-Task Platform',
+    category: 'mobile',
+    image: 'mudahJeWeb.jpg',
+    short: 'A combined web portal and mobile gig marketplace for campus freelancers.',
+    challenge: 'Local students seeking micro-jobs or deliveries had no secure way to coordinate tasks, leading to payment disputes.',
+    solution: 'Created a service marketplace that matches student freelancers with tasks, incorporating order statuses and review profiles.',
+    impact: 'Successfully matched over 450+ campus orders, allowing student micro-contractors to earn income securely.',
+    techs: ['Vue.js', 'Ionic / Cordova', 'Laravel API', 'MySQL'],
+    github: 'https://github.com/naaasruul/mudah-je',
+    demo: null
+  },
+  {
+    id: 5,
+    title: 'Movie Aggregator Engine',
+    category: 'frontend',
+    image: 'findmovie.png',
+    short: 'A fast API-driven movie database with customized scoring profiles.',
+    challenge: 'Aggregation engines loaded slowly, offering poor mobile viewports and cluttered navigation interfaces.',
+    solution: 'Developed a lightweight single-page application using Vite, with localized search caching and custom rating cards.',
+    impact: 'Achieved sub-100ms search results and a 95% user satisfaction rate on mobile devices.',
+    techs: ['Vue.js', 'TMDB API', 'Tailwind CSS', 'Vite'],
+    github: 'https://github.com/naaasruul/find-movie',
+    demo: null
+  }
 ]
-var $targetEl;
-var options;
-var instanceOptions;
-var modal = null;''
 
-function url(path){
-  const url = new URL(path,import.meta.url).href
-
-  return url;
+// Resolve image assets dynamically in Vite
+const getImageUrl = (name) => {
+  return new URL(`../assets/projects/${name}`, import.meta.url).href
 }
 
-onMounted(() => {
-  $targetEl = document.getElementById('default-modal');
-  // options with default values
-  options = {
-    placement: 'center-center',
-    backdrop: 'dynamic',
-    backdropClasses:
-      'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
-    closable: true,
-    onHide: () => {
-      console.log('modal is hidden');
-    },
-    onShow: () => {
-      console.log('modal is shown');
-    },
-    onToggle: () => {
-      console.log('modal has been toggled');
-      modal.hide();
-    },
-  };
-  // instance options object
-  instanceOptions = {
-    id: 'modalEl',
-    override: true
-  };
-  modal = new Modal($targetEl, options, instanceOptions);
-
+const filteredProjects = computed(() => {
+  if (activeFilter.value === 'all') return projects
+  return projects.filter(p => p.category === activeFilter.value)
 })
 
-
-// Carousel config
-const config = {
-  itemsToShow: 1,
-  gap: 8,
-  wrapAround: true,
-  breakpoints: {
-    640: {
-      itemsToShow: 1,
-      gap: 8,
-    },
-    768: {
-      itemsToShow: 2,
-      gap: 16,
-    },
-    1024: {
-      itemsToShow: 3,
-      gap: 24,
-    }
-  }
+const openProject = (project) => {
+  selectedProject.value = project
+  document.body.style.overflow = 'hidden' // Lock scroll
 }
 
-// Modal state
-const selectedProject = ref(null)
-
-// Close modal
-function closeModal() {
-  modal.hide();
-}
-
-function openProject(project) {
-  console.log('Opening project:', project.title);
-  selectedProject.value = project;
-
-  // console.log(selectedProject.value);
-  modal.show();
+const closeProject = () => {
+  selectedProject.value = null
+  document.body.style.overflow = '' // Restore scroll
 }
 </script>
 
 <template>
-  <section class="bg-white px-50 min-h-screen dark:bg-gray-900 antialiased">
-    <div class="max-w-screen-xl px-4 py-8 mx-auto lg:px-6 sm:py-16 lg:py-24">
-      <div class="max-w-2xl mx-auto text-center mb-8">
-        <h2 class="text-3xl font-bold leading-tight tracking-tight text-gray-900 sm:text-4xl dark:text-white">
-          My Projects
-        </h2>
-        <p class="mt-4 text-base font-normal text-gray-500 sm:text-xl dark:text-gray-400">
-          A selection of my favorite work, built with modern web technologies.
-        </p>
-      </div>
+  <section id="projects" class="py-24 relative z-10 border-t border-white/5 bg-slate-950/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <ScrollReveal :delay="100">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <span class="text-xs uppercase tracking-widest font-bold text-cyan-400 mb-3 font-mono block">
+            Portfolio
+          </span>
+          <h3 class="text-3xl sm:text-4xl font-extrabold text-slate-100 font-display">
+            Featured Projects
+          </h3>
+          <p class="mt-4 text-base sm:text-lg text-slate-400">
+            A review of real systems I have designed and deployed, illustrating solution-oriented software engineering.
+          </p>
+        </div>
+      </ScrollReveal>
 
-      <Carousel v-bind="config">
+      <!-- Category Filter Tabs -->
+      <ScrollReveal :delay="200">
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-12">
+          <button
+            v-for="filter in [
+              { id: 'all', label: 'All Projects' },
+              { id: 'fullstack', label: 'Full-Stack Apps' },
+              { id: 'mobile', label: 'Mobile Apps' },
+              { id: 'frontend', label: 'Creative Frontends' }
+            ]"
+            :key="filter.id"
+            @click="activeFilter = filter.id"
+            class="px-4 py-2 text-xs sm:text-sm font-semibold rounded-full border transition-all duration-300 cursor-pointer"
+            :class="[
+              activeFilter === filter.id
+                ? 'bg-cyan-500 text-slate-950 border-cyan-500 neon-glow-cyan/15'
+                : 'bg-white/5 border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/10'
+            ]"
+          >
+            {{ filter.label }}
+          </button>
+        </div>
+      </ScrollReveal>
 
-        <Slide class="flex" v-for="project in projects" :key="project.id">
-          <div @click="openProject(project)"
-            class="cursor-pointer max-w-sm h-full  bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <div clas>
-              <img class="rounded-t-lg w-100 object-cover" style="height: 300px;"
-                :src="url(project.image)"
-                alt="" />
-            </div>
-            <div class="p-5">
-              <div>
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {{ project.title }}
-                </h5>
-              </div>
-              <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ project.short }}</p>
-              <button @click="openModal(project)"
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Read more
-                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                  fill="none" viewBox="0 0 14 10">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9" />
-                </svg>
-              </button>
-            </div>
+      <!-- Project Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          v-for="project in filteredProjects"
+          :key="project.id"
+          @click="openProject(project)"
+          class="group bg-slate-900/40 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm cursor-pointer hover:border-cyan-500/20 transition-all duration-300 hover:scale-[1.02] flex flex-col justify-between"
+        >
+          <!-- Image Section -->
+          <div class="relative overflow-hidden aspect-video bg-slate-950">
+            <img 
+              :src="getImageUrl(project.image)" 
+              :alt="project.title"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+            <!-- Category Tag -->
+            <span class="absolute top-4 left-4 text-[10px] font-bold font-mono uppercase tracking-wider bg-slate-950/80 border border-white/10 px-2.5 py-1 rounded text-cyan-400">
+              {{ project.category }}
+            </span>
           </div>
-        </Slide>
 
-        <template #addons>
-          <Navigation />
-          <Pagination />
-        </template>
+          <!-- Card Content -->
+          <div class="p-6 flex flex-col justify-between flex-grow">
+            <div>
+              <h4 class="text-lg font-bold text-slate-100 mb-2 group-hover:text-cyan-300 transition-colors font-display">
+                {{ project.title }}
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4 text-justify">
+                {{ project.short }}
+              </p>
+            </div>
 
-      </Carousel>
-    </div>
-
-    <!-- Main modal -->
-    <div id="default-modal" tabindex="-1" aria-hidden="true"
-      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-      <div class="relative p-4 w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-          <!-- Modal header -->
-          <div
-            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-              {{ selectedProject?.title }}
-            </h3>
-            <button type="button"
-              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-              data-modal-hide="default-modal" @click="closeModal()">
-              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-              </svg>
-              <span class="sr-only">Close modal</span>
-            </button>
-          </div>
-          <!-- Modal body -->
-          <div class="p-4 md:p-5 space-y-4">
-            <div id="indicators-carousel" class="relative w-full" data-carousel="static">
-              <!-- Carousel wrapper -->
-              <div class="relative h-56 overflow-hidden rounded-md md:h-96">
-                
-                <!------------- ITEMS ------------->
-                <!-- Item 1 -->
-                <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                  <img
-                    src="https://hips.hearstapps.com/hmg-prod/images/wandavision-accent-1613490782.jpg?crop=0.502xw:1.00xh;0.251xw,0&resize=1200:*"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                </div>
-                <!-- Item 2 -->
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                  <img
-                    src="https://hips.hearstapps.com/hmg-prod/images/wandavision-accent-1613490782.jpg?crop=0.502xw:1.00xh;0.251xw,0&resize=1200:*"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                </div>
-                <!------------- ITEMS ------------->
-
-              </div>
-
-              <!-- Slider indicators -->
-              <div class="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-5 left-1/2">
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
-                  data-carousel-slide-to="0"></button>
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
-                  data-carousel-slide-to="1"></button>
-              </div>
-              <!-- Slider controls -->
-              <button type="button"
-                class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                data-carousel-prev>
-                <span
-                  class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                  <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M5 1 1 5l4 4" />
-                  </svg>
-                  <span class="sr-only">Previous</span>
+            <!-- Tags & Actions -->
+            <div class="pt-4 border-t border-white/5">
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                <span 
+                  v-for="tech in project.techs" 
+                  :key="tech"
+                  class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-slate-900 border border-white/5 text-slate-500"
+                >
+                  {{ tech }}
                 </span>
+              </div>
+              
+              <button 
+                class="w-full flex items-center justify-center space-x-1.5 px-4 py-2 border border-white/10 rounded-lg text-xs font-semibold text-slate-300 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:border-cyan-500 transition-all duration-300 cursor-pointer"
+              >
+                <span>View Details & Impact</span>
               </button>
-              <button type="button"
-                class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                data-carousel-next>
-                <span
-                  class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                  <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="m1 9 4-4-4-4" />
-                  </svg>
-                  <span class="sr-only">Next</span>
-                </span>
-              </button>
-
-
             </div>
-            <h1 class="text-4xl mt-3 text-gray-800 font-semibold dark:text-gray-200">{{ selectedProject?.title }}</h1>
-            <hr class="text-white">
-              <h1 class="text-lg mt-3 text-gray-800 dark:text-gray-200 font-extralight">{{ selectedProject?.details }}</h1>
-
-          </div>
-          <!-- Modal footer -->
-          <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-            <a v-if="selectedProject?.link" :href="selectedProject?.link" target="_blank"
-              class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">View on
-              GitHub</a>
-            <button data-modal-hide="default-modal" type="button" @click="closeModal"
-              class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Decline</button>
           </div>
         </div>
       </div>
+
     </div>
+
+    <!-- Custom Reactive Vue Modal (Portal emulation inside single page) -->
+    <transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div 
+        v-if="selectedProject" 
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm"
+        @click="closeProject"
+      >
+        <!-- Modal Wrapper -->
+        <transition
+          enter-active-class="transition duration-300 ease-out transform"
+          enter-from-class="opacity-0 scale-95 translate-y-4"
+          enter-to-class="opacity-100 scale-100 translate-y-0"
+          leave-active-class="transition duration-200 ease-in transform"
+          leave-from-class="opacity-100 scale-100 translate-y-0"
+          leave-to-class="opacity-0 scale-95 translate-y-4"
+        >
+          <div 
+            v-if="selectedProject"
+            class="relative w-full max-w-2xl bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden text-left flex flex-col"
+            @click.stop
+          >
+            <!-- Header Image -->
+            <div class="relative h-48 sm:h-64 bg-slate-950">
+              <img 
+                :src="getImageUrl(selectedProject.image)" 
+                :alt="selectedProject.title"
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+              
+              <!-- Close Button -->
+              <button 
+                @click="closeProject"
+                class="absolute top-4 right-4 p-2 bg-slate-950/80 hover:bg-slate-800 text-slate-400 hover:text-slate-100 rounded-full border border-white/10 transition-colors cursor-pointer"
+                aria-label="Close modal"
+              >
+                <X class="w-4 h-4" />
+              </button>
+            </div>
+
+            <!-- Body Contents -->
+            <div class="p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-280px)]">
+              <!-- Title -->
+              <div>
+                <h4 class="text-2xl font-extrabold text-slate-100 font-display">
+                  {{ selectedProject.title }}
+                </h4>
+                <div class="flex flex-wrap gap-2 mt-3">
+                  <span 
+                    v-for="tech in selectedProject.techs" 
+                    :key="tech"
+                    class="text-[11px] font-semibold font-mono px-2.5 py-1 rounded bg-slate-950 border border-white/5 text-slate-400"
+                  >
+                    {{ tech }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Challenge vs Solution -->
+              <div class="space-y-4 pt-2">
+                <div class="flex items-start space-x-3">
+                  <div class="p-1.5 rounded bg-rose-500/10 border border-rose-500/20 text-rose-400 mt-0.5">
+                    <BookOpen class="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span class="block text-xs font-bold uppercase tracking-wider text-rose-400 font-mono mb-1">The Challenge</span>
+                    <p class="text-sm text-slate-300 leading-relaxed text-justify">
+                      {{ selectedProject.challenge }}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                  <div class="p-1.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mt-0.5">
+                    <CheckCircle class="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span class="block text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono mb-1">The Solution</span>
+                    <p class="text-sm text-slate-300 leading-relaxed text-justify">
+                      {{ selectedProject.solution }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Business Impact Banner -->
+              <div class="p-5 rounded-xl bg-cyan-950/20 border border-cyan-500/20 shadow-inner">
+                <span class="block text-xs font-bold uppercase tracking-wider text-cyan-400 font-mono mb-2">Business & User Impact</span>
+                <p class="text-sm text-slate-200 leading-relaxed text-justify">
+                  {{ selectedProject.impact }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="px-6 py-4 bg-slate-950 border-t border-white/5 flex items-center justify-between gap-4">
+              <a 
+                v-if="selectedProject.github" 
+                :href="selectedProject.github" 
+                target="_blank"
+                class="flex items-center space-x-2 px-5 py-2.5 rounded-lg bg-slate-900 border border-white/10 hover:border-white/20 text-slate-300 hover:text-slate-100 text-sm font-semibold transition-all"
+              >
+                <Github class="w-4 h-4" />
+                <span>Source Code</span>
+              </a>
+              <a 
+                v-if="selectedProject.demo" 
+                :href="selectedProject.demo" 
+                target="_blank"
+                class="flex items-center space-x-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 text-sm font-bold transition-all"
+              >
+                <ExternalLink class="w-4 h-4" />
+                <span>Live Demo</span>
+              </a>
+              <button 
+                @click="closeProject"
+                class="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-slate-100 rounded-lg text-sm font-semibold transition-colors cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+
+          </div>
+        </transition>
+      </div>
+    </transition>
   </section>
-
-
-
 </template>
-
-<style>
-:root {
-  background-color: #242424;
-}
-
-.carousel {
-  --vc-pgn-background-color: rgba(255, 255, 255, 0.7);
-  --vc-pgn-active-color: rgba(59, 130, 246, 1);
-  --vc-nav-background: rgba(255, 255, 255, 0.7);
-  --vc-nav-border-radius: 100%;
-}
-</style>

@@ -10,12 +10,20 @@ declare module 'vue' {
   export interface GlobalComponents {
     AboutMe: typeof import('./src/components/AboutMe.vue')['default']
     AnimationText: typeof import('./src/components/AnimationText.vue')['default']
+    ContactForm: typeof import('./src/components/ContactForm.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
     Header2: typeof import('./src/components/Header-2.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    Hero: typeof import('./src/components/Hero.vue')['default']
     Modal: typeof import('./src/components/Modal.vue')['default']
+    Navbar: typeof import('./src/components/Navbar.vue')['default']
+    ParticleBackground: typeof import('./src/components/ParticleBackground.vue')['default']
     Projects: typeof import('./src/components/Projects.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
+    ScrollReveal: typeof import('./src/components/ScrollReveal.vue')['default']
+    Services: typeof import('./src/components/Services.vue')['default']
     Skills: typeof import('./src/components/Skills.vue')['default']
   }
 }

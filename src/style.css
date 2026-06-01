@@ -1,23 +1,60 @@
 @import "tailwindcss";
-@import "@nuxt/ui";
-@import "flowbite/src/themes/default";
-@plugin "flyonui";
-@import "flyonui/variants.css";
 
-/* @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap'); */
-
-@font-face {
-  font-family: Figtree;
-  font-style: normal;
-  src: url("assets/fonts/Figtree/Figtree-Regular.ttf") format("truetype");
+@theme {
+  --font-sans: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+  --font-mono: 'Fira Code', monospace;
 }
 
-@custom-variant dark (&:where(.dark, .dark *));  /*  To Enable Dark Mode */
+/* Premium Responsive Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+  transition: background 0.3s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}
 
-@theme{
-  --font-display: 'Figtree';
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #818cf8;
 }
 
 html {
-  @apply font-display;
+  @apply scroll-smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased overflow-x-hidden transition-colors duration-300;
+}
+
+/* Custom Glassmorphism Styles */
+@utility glass-panel {
+  @apply backdrop-blur-md bg-white/60 border border-slate-200/60 dark:bg-slate-900/60 dark:border-slate-800/60 shadow-sm;
+}
+
+@utility glass-navbar {
+  @apply backdrop-blur-lg bg-white/70 dark:bg-slate-950/70 border-b border-slate-200/40 dark:border-slate-900/40;
+}
+
+/* Radial Glow Gradients */
+@utility glow-cyan {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
+}
+
+@utility glow-violet {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+}
+
+@utility glow-emerald {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
 }
