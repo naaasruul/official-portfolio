@@ -1,5 +1,15 @@
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, computed } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, computed, watch } from 'vue'
+import {
+  db,
+  storage,
+  portfolioDocRef,
+  storageRef,
+  uploadBytes,
+  getDownloadURL,
+  setDoc,
+  onSnapshot
+} from './firebase.js'
 import { 
   Lock, 
   Unlock, 
@@ -112,6 +122,13 @@ const activeAdminTab = ref('profile')
 const showPassword = ref(false)
 const selectedProject = ref(null)
 
+// Firebase state
+const isLoading = ref(true)
+const firebaseConnected = ref(false)
+const isUploading = ref(false)
+const uploadProgress = ref('')
+let unsubFirestore = null
+
 // Custom Toast Alerts
 const toasts = ref([])
 const addToast = (message, type = 'success') => {
@@ -145,32 +162,106 @@ const setupScrollObserver = () => {
   })
 }
 
-// LocalStorage Persistence
-const loadData = () => {
+// LocalStorage cache helpers
+const loadLocalCache = () => {
   const local = localStorage.getItem('nasrul_dev_portfolio')
   if (local) {
     try {
-      data.value = JSON.parse(local)
-      if (!data.value.profile) data.value.profile = { ...defaultData.profile }
-      if (!data.value.skills) data.value.skills = [ ...defaultData.skills ]
-      if (!data.value.projects) data.value.projects = [ ...defaultData.projects ]
-      if (!data.value.settings) data.value.settings = { ...defaultData.settings }
+      const parsed = JSON.parse(local)
+      if (!parsed.profile) parsed.profile = { ...defaultData.profile }
+      if (!parsed.skills) parsed.skills = [ ...defaultData.skills ]
+      if (!parsed.projects) parsed.projects = [ ...defaultData.projects ]
+      if (!parsed.settings) parsed.settings = { ...defaultData.settings }
+      return parsed
     } catch (e) {
-      data.value = { ...defaultData }
+      return null
     }
-  } else {
-    data.value = { ...defaultData }
-    saveData()
+  }
+  return null
+}
+
+const saveLocalCache = () => {
+  localStorage.setItem('nasrul_dev_portfolio', JSON.stringify(data.value))
+}
+
+// Firebase Firestore Persistence
+const loadData = () => {
+  // 1. Immediately load from localStorage cache for fast first paint
+  const cached = loadLocalCache()
+  if (cached) {
+    data.value = cached
   }
 
-  // Load theme preference
+  // Load theme preference (always from localStorage)
   const savedTheme = localStorage.getItem('nasrul_dev_theme')
   isDark.value = savedTheme === 'dark'
   applyTheme()
+
+  // 2. Setup Firestore real-time listener
+  try {
+    unsubFirestore = onSnapshot(
+      portfolioDocRef,
+      (docSnap) => {
+        firebaseConnected.value = true
+        isLoading.value = false
+
+        if (docSnap.exists()) {
+          const fbData = docSnap.data()
+          // Merge with defaults to ensure all fields exist
+          data.value = {
+            profile: { ...defaultData.profile, ...(fbData.profile || {}) },
+            skills: fbData.skills && fbData.skills.length > 0 ? fbData.skills : [...defaultData.skills],
+            projects: fbData.projects && fbData.projects.length > 0 ? fbData.projects : [...defaultData.projects],
+            settings: { ...defaultData.settings, ...(fbData.settings || {}) }
+          }
+          // Update local cache
+          saveLocalCache()
+        } else {
+          // First time: seed Firestore with default data
+          const seedData = cached || { ...defaultData }
+          data.value = seedData
+          setDoc(portfolioDocRef, seedData).catch(err => {
+            console.warn('Failed to seed Firestore:', err)
+          })
+          saveLocalCache()
+        }
+      },
+      (error) => {
+        console.warn('Firestore listener error, using local cache:', error)
+        firebaseConnected.value = false
+        isLoading.value = false
+        // Fallback to localStorage
+        if (!cached) {
+          data.value = { ...defaultData }
+          saveLocalCache()
+        }
+      }
+    )
+  } catch (err) {
+    console.warn('Firebase init error, using local cache:', err)
+    firebaseConnected.value = false
+    isLoading.value = false
+    if (!cached) {
+      data.value = { ...defaultData }
+      saveLocalCache()
+    }
+  }
 }
 
-const saveData = () => {
-  localStorage.setItem('nasrul_dev_portfolio', JSON.stringify(data.value))
+// Save to Firestore + localStorage
+const saveData = async () => {
+  // Always update local cache immediately
+  saveLocalCache()
+
+  // Sync to Firestore
+  if (firebaseConnected.value) {
+    try {
+      await setDoc(portfolioDocRef, JSON.parse(JSON.stringify(data.value)))
+    } catch (err) {
+      console.warn('Firestore save failed, data cached locally:', err)
+      addToast('Cloud sync failed. Changes saved locally.', 'error')
+    }
+  }
 }
 
 const applyTheme = () => {
@@ -197,6 +288,8 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (scrollObserver) scrollObserver.disconnect()
+  // Cleanup Firestore listener
+  if (unsubFirestore) unsubFirestore()
 })
 
 // Authentication
@@ -320,19 +413,58 @@ const selectEditProject = (idx) => {
   Object.assign(projectForm, data.value.projects[idx])
 }
 
-const handleImageUpload = (event) => {
+const handleImageUpload = async (event) => {
   const file = event.target.files[0]
   if (!file) return
 
-  if (file.size > 1.8 * 1024 * 1024) {
-    addToast('File too large. Max 1.8MB allowed.', 'error')
+  // Max 10MB for Firebase Storage
+  if (file.size > 10 * 1024 * 1024) {
+    addToast('File too large. Max 10MB allowed.', 'error')
     return
   }
 
+  if (firebaseConnected.value) {
+    // Upload to Firebase Storage
+    try {
+      isUploading.value = true
+      uploadProgress.value = 'Uploading to cloud...'
+
+      const timestamp = Date.now()
+      const fileExt = file.name.split('.').pop()
+      const filePath = `projects/${timestamp}_${file.name}`
+      const fileRef = storageRef(storage, filePath)
+
+      await uploadBytes(fileRef, file)
+      uploadProgress.value = 'Getting download URL...'
+
+      const downloadUrl = await getDownloadURL(fileRef)
+      projectForm.imageUrl = downloadUrl
+
+      isUploading.value = false
+      uploadProgress.value = ''
+      addToast('Image uploaded to cloud storage.', 'success')
+    } catch (err) {
+      console.warn('Firebase Storage upload failed, falling back to Base64:', err)
+      isUploading.value = false
+      uploadProgress.value = ''
+      // Fallback to Base64
+      fallbackBase64Upload(file)
+    }
+  } else {
+    // Fallback to Base64 when Firebase is not connected
+    fallbackBase64Upload(file)
+  }
+}
+
+const fallbackBase64Upload = (file) => {
+  if (file.size > 1.8 * 1024 * 1024) {
+    addToast('File too large for local storage. Max 1.8MB.', 'error')
+    return
+  }
   const reader = new FileReader()
   reader.onload = (e) => {
     projectForm.imageUrl = e.target.result
-    addToast('Image uploaded successfully.', 'success')
+    addToast('Image saved locally (Base64).', 'success')
   }
   reader.readAsDataURL(file)
 }
@@ -399,13 +531,13 @@ const importBackup = (event) => {
   if (!file) return
 
   const reader = new FileReader()
-  reader.onload = (e) => {
+  reader.onload = async (e) => {
     try {
       const parsed = JSON.parse(e.target.result)
       if (parsed.profile && parsed.skills && parsed.projects && parsed.settings) {
         data.value = parsed
-        saveData()
-        addToast('Portfolio database restored successfully.', 'success')
+        await saveData()
+        addToast('Portfolio database restored & synced to cloud.', 'success')
       } else {
         addToast('Invalid backup file structures.', 'error')
       }
@@ -417,13 +549,13 @@ const importBackup = (event) => {
   event.target.value = ''
 }
 
-const resetToDefaults = () => {
-  if (confirm('Format database memory back to defaults?')) {
+const resetToDefaults = async () => {
+  if (confirm('Format database memory back to defaults? This will also reset cloud data.')) {
     data.value = JSON.parse(JSON.stringify(defaultData))
-    saveData()
+    await saveData()
     populateProfileForm()
     resetProjectForm()
-    addToast('Database configurations formatted.', 'info')
+    addToast('Database configurations formatted & synced.', 'info')
   }
 }
 
@@ -604,6 +736,26 @@ const submitContact = () => {
 <template>
   <div class="min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white pb-12 transition-colors duration-300 relative">
     
+    <!-- Firebase Loading Overlay -->
+    <transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-500 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div 
+        v-if="isLoading"
+        class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white dark:bg-slate-950 transition-colors"
+      >
+        <div class="relative">
+          <div class="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div>
+        </div>
+        <p class="mt-6 text-sm font-mono text-slate-500 dark:text-slate-400 tracking-wider animate-pulse">Just a sec...</p>
+      </div>
+    </transition>
+
     <!-- Decorative background glow rings -->
     <div class="absolute top-[10%] left-0 w-full h-[600px] pointer-events-none glow-cyan z-0" />
     <div class="absolute top-[50%] left-0 w-full h-[600px] pointer-events-none glow-violet z-0" />
@@ -642,6 +794,13 @@ const submitContact = () => {
       <div class="flex items-center space-x-2">
         <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
         <span class="tracking-wide">CMS ACTIVE // LIVE DATA MODE</span>
+        <span 
+          class="ml-2 inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+          :class="firebaseConnected ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'"
+        >
+          <span class="w-1.5 h-1.5 rounded-full" :class="firebaseConnected ? 'bg-emerald-400' : 'bg-amber-400'"></span>
+          <span>{{ firebaseConnected ? 'Cloud Synced' : 'Local Only' }}</span>
+        </span>
       </div>
       <div class="flex items-center space-x-4">
         <button 
@@ -1436,13 +1595,24 @@ const submitContact = () => {
                   </div>
                 </div>
 
-                <!-- Base64 File Uploader Field -->
+                <!-- Cloud / Base64 File Uploader Field -->
                 <div class="flex flex-col space-y-1.5 text-left">
-                  <label class="text-[9px] font-arcade text-slate-400">Thumbnail Sprite Upload</label>
+                  <label class="text-[9px] font-arcade text-slate-400">
+                    Thumbnail Upload
+                    <span v-if="firebaseConnected" class="text-emerald-500">(Cloud Storage)</span>
+                    <span v-else class="text-amber-500">(Local Base64)</span>
+                  </label>
                   <div class="flex items-center space-x-4">
-                    <label class="px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 rounded-lg hover:border-slate-600 transition-colors cursor-pointer text-center flex-grow">
-                      <span>CHOOSE COVER FILE</span>
-                      <input type="file" accept="image/*" @change="handleImageUpload" class="hidden" />
+                    <label 
+                      class="px-4 py-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 rounded-lg hover:border-slate-600 transition-colors cursor-pointer text-center flex-grow"
+                      :class="isUploading ? 'opacity-50 pointer-events-none' : ''"
+                    >
+                      <span v-if="isUploading" class="flex items-center justify-center space-x-2">
+                        <span class="w-3 h-3 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></span>
+                        <span>{{ uploadProgress }}</span>
+                      </span>
+                      <span v-else>CHOOSE COVER FILE</span>
+                      <input type="file" accept="image/*" @change="handleImageUpload" class="hidden" :disabled="isUploading" />
                     </label>
                     
                     <!-- Cover image thumbnail preview -->
