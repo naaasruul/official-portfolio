@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>CatnestVet — Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../base.css" />
+<style>
+  :root {
+    --font: "Inter";
+    --paper: #FBF8F5;
+    --ink: #24101B;
+    --ink-2: #5A4651;
+    --ink-3: #8A7781;
+    --brand: #6B1E48;
+    --band-bg: #4A1430;
+    --band: 700px;
+    --on-band: #FFFFFF;
+    --on-band-2: rgba(255,255,255,.74);
+    --on-band-line: rgba(255,255,255,.3);
+    --chip-bg: #F6E7EF;
+    --chip-ink: #6B1E48;
+    --flow-bg: #F3E9EE;
+  }
+  .h1 { letter-spacing: -.045em; }
+  .hero .h1 em { font-style: normal; color: #F5C84B; }
+  .hero .blob { position: absolute; width: 230px; height: 230px; border-radius: 50%; background: #F5C84B; right: -70px; top: 210px; }
+  .hero .ring { position: absolute; width: 140px; height: 140px; border-radius: 50%; border: 26px solid rgba(255,255,255,.12); left: 110px; top: 120px; }
+  .logo { position: absolute; left: 120px; top: 30px; height: 52px; }
+  .foot img { height: 96px; margin: 0 auto; }
+  .stack { position: relative; height: 540px; margin-top: 64px; }
+  .stack .browser { position: absolute; }
+  .stack .b-main { --w: 800px; left: 320px; top: 0; z-index: 2; }
+  .stack .b-left { --w: 560px; left: 10px; top: 120px; }
+  .stack .b-right { --w: 560px; right: 10px; top: 120px; }
+  .built { text-align: center; padding-top: 120px; }
+  .built .lead { max-width: 640px; margin: 18px auto 0; }
+
+  .desk { display: grid; grid-template-columns: 360px 1fr; gap: 64px; align-items: center; padding-top: 150px; }
+  .desk.flip { grid-template-columns: 1fr 360px; }
+  .desk.flip .copy { order: 2; }
+  .desk .copy .h2 { margin-top: 16px; font-size: 40px; }
+  .desk .copy .lead { margin-top: 20px; font-size: 18px; }
+  .desk .stage { position: relative; padding: 48px 0; }
+  .desk .stage .block { position: absolute; top: 0; bottom: 0; left: 70px; right: -120px; border-radius: 24px; background: var(--block); }
+  .desk.flip .stage .block { left: -120px; right: 70px; }
+  .desk .stage .browser { position: relative; --w: 100%; width: 100%; }
+  .plum { --block: #4A1430; } .gold { --block: #F5C84B; } .blush { --block: #EBD3DF; }
+
+  .sev { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; margin-right: 8px; }
+  .sev.c { background: #FDE2E2; color: #B42318; } .sev.w { background: #FEF0C7; color: #93370D; } .sev.i { background: #EEF0F3; color: #475467; }
+  .float .row { display: flex; align-items: center; margin-top: 10px; font-size: 13.5px; font-weight: 500; }
+  .dots { display: flex; gap: 14px; margin-top: 10px; font-size: 13px; font-weight: 600; }
+  .dots i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+
+  .flowgrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 34px 28px; margin: 60px 0 0; padding: 50px 40px 56px; border-radius: 28px; background: var(--flow-bg); }
+  .flowgrid .step { grid-column: span 2; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; text-align: left; }
+  .flowgrid .step:nth-child(4) { grid-column: 2 / span 2; }
+  .flowgrid .step .browser { --w: 100%; width: 100%; }
+  .flowgrid .step p { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+
+  .anno .grid { grid-template-columns: 250px auto 250px; }
+  .anno .browser { --w: 640px; margin: 0 40px; align-self: center; }
+  .anno .col { justify-content: space-between; padding: 30px 0; }
+  .anno .note::after { width: 60px; }
+  .anno .col.left .note::before { left: calc(100% + 80px); }
+  .anno .col.right .note::before { right: calc(100% + 80px); }
+  .stackcards { padding-top: 160px; }
+</style>
+</head>
+<body>
+
+<header class="hero" data-slice="hero">
+  <img class="logo" src="logo-light.png" alt="CatnestVet" />
+  <div class="ring"></div>
+  <div class="blob"></div>
+  <span class="pill">CLINIC MANAGEMENT · 5 BRANCHES</span>
+  <h1 class="h1">Every branch,<br /><em>one screen.</em></h1>
+  <p class="lead">A management dashboard for a group of cat clinics. Owners see sales, footfall, productivity and staff performance across every branch, with AI notes on what to look at first.</p>
+  <div class="stack">
+    <div class="browser b-left"><div class="bar"><i></i><i></i><i></i></div><img src="screens/sales-dashboard.webp" alt="" /></div>
+    <div class="browser b-right"><div class="bar"><i></i><i></i><i></i></div><img src="screens/productivity-dashboard.webp" alt="" /></div>
+    <div class="browser b-main"><div class="bar"><i></i><i></i><i></i><span>catnest · /dashboard</span></div><img src="screens/overview-dashboard.webp" alt="" /></div>
+  </div>
+</header>
+
+<section class="built wrap">
+  <h2 class="h2">Built for owners who can't be at every clinic</h2>
+  <p class="lead">Five branches, dozens of vets and nurses, and numbers that used to live in separate spreadsheets.</p>
+</section>
+
+<section class="wrap desk" data-slice="ai">
+  <div class="copy">
+    <p class="eyebrow">AI insights</p>
+    <h2 class="h2">A summary before the charts</h2>
+    <p class="lead">One button opens a side panel with a plain-language summary of the week and an action plan. Each item is tagged Critical, Warning or Info and links straight to the branch it's about.</p>
+  </div>
+  <div class="stage plum">
+    <div class="block"></div>
+    <div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/overview-dashboard-ai-insights-overlay-open.webp" alt="" /></div>
+    <div class="float" style="left:-60px;bottom:-20px;width:330px">
+      <div class="t">Action plan</div>
+      <div class="row"><span class="sev c">Critical</span>Midtown capacity at 92%</div>
+      <div class="row"><span class="sev w">Warning</span>Downtown sales 12% below target</div>
+      <div class="row"><span class="sev i">Info</span>Weekend footfall up 8%</div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap desk flip" data-slice="sales">
+  <div class="copy">
+    <p class="eyebrow">Sales</p>
+    <h2 class="h2">Targets you can read at a glance</h2>
+    <p class="lead">Daily sales by branch, progress against daily and monthly targets, and a year-on-year line you can switch between 2025 and 2026. Switch the view from day to week to month without reloading the page.</p>
+  </div>
+  <div class="stage gold">
+    <div class="block"></div>
+    <div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/sales-dashboard.webp" alt="" /></div>
+    <div class="float" style="right:-50px;bottom:-24px">
+      <div class="t">Target status</div>
+      <div class="dots"><span><i style="background:#12B76A"></i>≥ 100%</span><span><i style="background:#F79009"></i>80–99%</span><span><i style="background:#F04438"></i>&lt; 80%</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap desk" data-slice="team">
+  <div class="copy">
+    <p class="eyebrow">Staff &amp; vets</p>
+    <h2 class="h2">See who's carrying the week</h2>
+    <p class="lead">A leaderboard ranks vets and staff by sales and revenue per hour, with a small trend for each person. Separate views cover vet nurses and vet assistants, and new data comes in by file upload.</p>
+  </div>
+  <div class="stage blush">
+    <div class="block"></div>
+    <div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/staff-vets-dashboard.webp" alt="" /></div>
+  </div>
+</section>
+
+<section class="flow wrap" data-slice="flow">
+  <p class="eyebrow">How it works</p>
+  <h2 class="h2" style="margin-top:14px">A manager's week, in five screens</h2>
+  <p class="lead">Record the numbers, check the overview, ask what changed, then dig into the branch or person behind it.</p>
+  <div class="flowgrid">
+    <div class="step"><span class="tag">1 · Record</span><div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/footfall-dashboard-data-entry-open-modal.webp" alt="" /></div><p>Staff log each branch's daily footfall in a quick modal.</p></div>
+    <div class="step"><span class="tag">2 · Overview</span><div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/overview-dashboard.webp" alt="" /></div><p>KPIs, weekly trends and branch status on one page.</p></div>
+    <div class="step"><span class="tag">3 · Ask</span><div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/overview-dashboard-ai-insights-overlay-open.webp" alt="" /></div><p>AI insights explain the week and suggest what to check.</p></div>
+    <div class="step"><span class="tag">4 · Capacity</span><div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/productivity-dashboard.webp" alt="" /></div><p>Revenue per operating hour and how full each branch is.</p></div>
+    <div class="step"><span class="tag">5 · People</span><div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/vn-dashboard.webp" alt="" /></div><p>Vet nurse and assistant performance, branch by branch.</p></div>
+  </div>
+</section>
+
+<section class="anno wrap" data-slice="overview" style="padding-bottom:0">
+  <p class="eyebrow">Overview</p>
+  <h2 class="h2" style="margin-top:14px">Business health in one read</h2>
+  <div class="grid">
+    <div class="col left">
+      <div class="note"><b>KPI summary</b><p>Sales, productivity and footfall against target, with the change since last week.</p></div>
+      <div class="note"><b>Weekly trends</b><p>Seven-day bars for sales, footfall and productivity side by side.</p></div>
+    </div>
+    <div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="screens/overview-dashboard.webp" alt="" /></div>
+    <div class="col right">
+      <div class="note"><b>Filters</b><p>Week, branch and staff filters apply to every chart at once.</p></div>
+      <div class="note"><b>Branch status</b><p>A green, amber or red dot flags which branch needs attention.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="stackcards wrap" data-slice="build">
+  <p class="eyebrow">Under the hood</p>
+  <h2 class="h2" style="margin-top:14px">Fast to use, every day</h2>
+  <div class="cards">
+    <div class="card"><span class="n">01</span><b>No full reloads</b><p>Livewire loads panels like AI insights on demand, and Alpine.js handles the sidebar and modals.</p></div>
+    <div class="card"><span class="n">02</span><b>Interactive charts</b><p>Chart.js graphs with hover tooltips that show the exact value for each branch.</p></div>
+    <div class="card"><span class="n">03</span><b>Remembers you</b><p>Light or dark mode and the collapsed sidebar are saved, so the dashboard opens the way you left it.</p></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <img src="logo.png" alt="CatnestVet — Your Cat's Second Home" />
+</footer>
+
+</body>
+</html>

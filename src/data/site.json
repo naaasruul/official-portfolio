@@ -1,0 +1,35 @@
+{
+  "name": "Nas",
+  "shortName": "Nasrul",
+  "role": "Freelance Web & Mobile Developer",
+  "headline": ["Hi, I'm Nasrul.", "I build web and mobile apps."],
+  "intro": "Freelance web & mobile developer. I build a system that helps your business — from the database to the screen in your hand.",
+  "photo": "/images/profile.jpg",
+  "photoCaption": "Based in Malaysia",
+  "location": "Kuala Lumpur",
+  "timezone": "Asia/Kuala_Lumpur",
+  "status": {
+    "show": true,
+    "label": "Available for freelance work"
+  },
+  "currentlyBuilding": "Malaysia Sign Language — Learning app for learn Malaysian Sign Language (MSL) through videos, quizzes and flashcards.",
+  "email": "nasrulhaqhidayat@gmail.com",
+  "resume": "/files/nas-dev-resume.pdf",
+  "socials": [
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/your-handle" },
+    { "label": "GitHub", "url": "https://github.com/naaasruul" }
+  ],
+  "about": {
+    "paragraphs": [
+      "I started with Computer Science in secondary school, then joined a work-study programme at Anak2U, where my first framework was Ionic and my job was building the screens of a mobile app. That was enough to get me hooked. I went on to a Diploma in Computer Science at KPMB Beranang, and I'm now studying CS at UPM. What I enjoy most is taking messy, manual work and turning it into something people actually like using. Away from the keyboard I'm usually playing guitar, drums or piano, or singing.",
+      "I've been freelancing since my diploma: an IoT project for a student business, an assignment-helper system, a learning platform for a training centre and an internal dashboard for a group of vet clinics. I can take a project from UI design through the backend and mobile app to launch, or join as the developer when you already have designs. I work best with local businesses, training centres, clinics and schools that have outgrown their spreadsheets. If that sounds like you, I'd like to hear about it."
+    ],
+    "facts": [
+      { "label": "Studying", "value": "Computer Science, UPM" },
+      { "label": "Based in", "value": "Malaysia" },
+      { "label": "Languages", "value": "English, Malay" },
+      { "label": "Open to", "value": "Freelance & contract projects" }
+    ]
+  },
+  "contactHeadline": ["Have a project in mind?", "Let's build it."]
+}
