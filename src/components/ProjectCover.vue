@@ -18,7 +18,7 @@ watch(() => props.project.cover, () => (failed.value = false))
   <img
     v-if="project.cover && !failed"
     :src="project.cover"
-    :alt="`${project.title} screenshot`"sds
+    :alt="`${project.title} screenshot`"
     :loading="eager ? 'eager' : 'lazy'"
     :class="imgClass"
     :style="{ viewTransitionName: transitionName(project.slug), transformOrigin: 'center top' }"
