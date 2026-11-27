@@ -46,18 +46,23 @@
   {
     "slug": "mudahje",
     "title": "MudahJe",
-    "type": "Web + Mobile",
-    "year": 2024,
+    "type": "Mobile",
+    "year": 2026,
     "featured": true,
-    "summary": "Class and student management, with a companion mobile app for teachers.",
-    "cover": "/images/projects/mudahje-web.jpg",
-    "gallery": ["/images/projects/mudahje-mobile.jpg"],
-    "tech": ["Laravel", "Flutter", "MySQL"],
-    "role": "Full-stack & mobile developer",
-    "problem": "Placeholder — what problem did this project solve, and for whom?",
+    "summary": "A Malaysian Sign Language (BIM) learning app: short daily lessons with Isya the mascot, a signer-checked dictionary and cards for real situations.",
+    "cover": "/images/projects/mudahje/01-hero.webp",
+    "showcase": "/images/projects/mudahje/showcase.webp",
+    "gallery": [],
+    "tech": ["Flutter", "Riverpod", "Figma"],
+    "role": "Product designer & mobile developer",
+    "problem": "Malaysia has more than 44,000 Deaf people and only about 60 active sign language interpreters. Clinics, counters and schools rarely know basic BIM, and the existing BIM apps are dictionaries rather than courses. MudahJe teaches BIM a little every day, the way language apps teach spoken languages.",
     "highlights": [
-      "Placeholder — a feature you are proud of.",
-      "Placeholder — a technical challenge and how you solved it."
+      "A winding lesson path with streaks, XP and lives, so learners always know the next step.",
+      "Video quizzes, fingerspelling practice with the camera, and review that brings back the signs you get wrong.",
+      "A dictionary that shows how each sign varies by state, from the north to Sabah and Sarawak.",
+      "Situation packs and full-screen communication cards for clinics, counters and emergencies.",
+      "School mode: teachers run a class through the same units, with a weekly leaderboard.",
+      "A 22-screen clickable prototype in Figma and a mascot, Isya, with 8 poses; the Flutter app is in progress."
     ],
     "links": { "live": "", "github": "" }
   },
