@@ -1,17 +1,92 @@
 @import "tailwindcss";
-@import "@nuxt/ui";
-@import "flowbite/src/themes/default";
-@plugin "flyonui";
-@import "flyonui/variants.css";
 
-@font-face {
-  font-family: Melete;
-  font-style: normal;
-  src: url("assets/fonts/Melete/Melete-Regular.otf") format("opentype");
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit Variable", "Geist Variable", ui-sans-serif, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+
+  /* Warm flat-illustration palette: cream wall, navy ink, cobalt + orange */
+  --color-bg: #FBF4E9;
+  --color-surface: #FFFDF9;
+  --color-subtle: #F4E9D8;
+  --color-ink: #1B2559;
+  --color-ink-2: #464E7E;
+  --color-ink-3: #5F6590;
+  --color-line: #EADDC8;
+  --color-line-strong: #D8C7AB;
+  --color-accent: #2A4BD7;
+  --color-accent-hover: #1F3AB0;
+  --color-accent-soft: #E3E9FD;
+  --color-orange: #F26A3D;
+  --color-orange-ink: #B9431A;
+  --color-orange-soft: #FDE4D6;
+  --color-ok: #2E9E5B;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@custom-variant dark (&:where(.dark, .dark *));  /*  To Enable Dark Mode */
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+  }
+  body {
+    font-family: var(--font-sans);
+    overflow-x: clip;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-accent-hover);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
 
-@theme{
-  --font-display: 'Melete';
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: 20px;
+  @media (width >= 768px) {
+    padding-inline: 32px;
+    max-width: 1184px;
+  }
+}
+
+/* Card image → project banner morph (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+}
+::view-transition-group(*) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

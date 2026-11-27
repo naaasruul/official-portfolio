@@ -1,27 +1,17 @@
 <script setup>
-import Projects from './components/Projects.vue'
-import Header from './components/Header.vue'
-import AboutMe from './components/AboutMe.vue'
-import Skill from './components/Skills.vue'
-import Footer from './components/Footer.vue'
-
+import { RouterView } from 'vue-router'
+import { MotionConfig } from 'motion-v'
+import NavBar from './components/NavBar.vue'
+import SiteFooter from './components/SiteFooter.vue'
 </script>
 
 <template>
-
-<Header></Header>
-
-<section class=" bg-white dark:bg-gray-900">
-    <Projects/>
-
-    <AboutMe/>
-
-    <Skill/>
-</section>
-
-<Footer/>
+  <MotionConfig reduced-motion="user">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
+    <NavBar />
+    <main id="main">
+      <RouterView :key="$route.path" />
+    </main>
+    <SiteFooter />
+  </MotionConfig>
 </template>
-
-<style scoped>
-
-</style>

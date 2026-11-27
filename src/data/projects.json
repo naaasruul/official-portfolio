@@ -1,0 +1,87 @@
+[
+  {
+    "slug": "aerix",
+    "title": "AERIX",
+    "type": "Web + Mobile",
+    "year": 2026,
+    "featured": true,
+    "summary": "A mobile-first learning platform for FERA Training Center, where workers take fire and workplace safety courses and earn points.",
+    "cover": "/images/projects/aerix/01-hero.webp",
+    "showcase": "/images/projects/aerix/showcase.webp",
+    "gallery": [],
+    "tech": ["Laravel", "Bootstrap"],
+    "role": "Full-stack developer",
+    "problem": "Safety training for industrial workers usually happens in a classroom on a fixed date. FERA Training Center wanted workers to take courses on their phones between shifts, while instructors keep control of the content, grading and certification.",
+    "highlights": [
+      "Course catalogue with HRD Corp claimable, level and certification filters, plus enrolment and checkout.",
+      "Course player with video lessons, quizzes and assignments grouped into modules, with progress saved per lesson.",
+      "Points for daily check-ins, finished courses and referrals, redeemable for safety gear vouchers.",
+      "Instructor side: course builder with an AI-drafted description, assignment grading and student cohorts.",
+      "Layouts designed to hold up in five languages: English, Bengali, Spanish, French and Hindi."
+    ],
+    "links": { "live": "", "github": "" }
+  },
+  {
+    "slug": "catnest",
+    "title": "CatnestVet",
+    "type": "Web",
+    "year": 2026,
+    "featured": true,
+    "summary": "A management dashboard for a group of cat clinics: sales, footfall, productivity and staff performance across every branch.",
+    "cover": "/images/projects/catnest/01-hero.webp",
+    "showcase": "/images/projects/catnest/showcase.webp",
+    "gallery": [],
+    "tech": ["Laravel", "Livewire", "Alpine.js", "Chart.js"],
+    "role": "Full-stack developer",
+    "problem": "Catnest runs several cat clinics, and each branch's sales, footfall and staff numbers lived in separate spreadsheets. The owners needed one place to see how every branch was doing and which one needed attention first.",
+    "highlights": [
+      "Overview dashboard with KPI cards, weekly trends and a branch table flagged green, amber or red against target.",
+      "AI insights panel that summarises the week and lists Critical, Warning and Info actions per branch.",
+      "Sales, footfall and productivity views with day, week and month granularity and a 2025 vs 2026 comparison.",
+      "Leaderboards for vets, vet nurses and vet assistants, with data imported by file upload.",
+      "Collapsible sidebar and dark mode that remember the user's choice between visits."
+    ],
+    "links": { "live": "", "github": "" }
+  },
+  {
+    "slug": "mudahje",
+    "title": "MudahJe",
+    "type": "Web + Mobile",
+    "year": 2024,
+    "featured": true,
+    "summary": "Class and student management, with a companion mobile app for teachers.",
+    "cover": "/images/projects/mudahje-web.jpg",
+    "gallery": ["/images/projects/mudahje-mobile.jpg"],
+    "tech": ["Laravel", "Flutter", "MySQL"],
+    "role": "Full-stack & mobile developer",
+    "problem": "Placeholder — what problem did this project solve, and for whom?",
+    "highlights": [
+      "Placeholder — a feature you are proud of.",
+      "Placeholder — a technical challenge and how you solved it."
+    ],
+    "links": { "live": "", "github": "" }
+  },
+  {
+    "slug": "marimembaca",
+    "title": "Mari Membaca",
+    "type": "Mobile",
+    "year": 2025,
+    "featured": true,
+    "summary": "A reading app for Anak2U that helps children learn to read Malay through stories, read-aloud practice and quick games.",
+    "cover": "/images/projects/marimembaca/slide-1.webp",
+    "gallery": [
+      { "src": "/images/projects/marimembaca/slide-2.webp", "caption": "Log in, home, book catalogue and the reading screen" },
+      { "src": "/images/projects/marimembaca/slide-3.webp", "caption": "Sound matching, picture quiz and the reward screen" }
+    ],
+    "tech": ["Flutter", "Dart", "REST API"],
+    "role": "Mobile developer",
+    "problem": "Young children need lots of reading practice, but a book alone can't tell them whether they read a word correctly. Anak2U wanted an app where a child reads a story out loud, gets feedback, and parents can see how they're doing.",
+    "highlights": [
+      "Read-aloud mode: the app listens with speech-to-text and highlights each word as the child reads it.",
+      "Story audio and text-to-speech so a child can hear a page before reading it.",
+      "Activities after each book: match sounds to words and pick the right word for a picture, with stars as rewards.",
+      "Parent mode with child profiles and progress charts, all loaded from the Anak2U API."
+    ],
+    "links": { "live": "", "github": "" }
+  }
+]

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AERIX — Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../base.css" />
+<style>
+  :root {
+    --font: "IBM Plex Sans";
+    --paper: #F4F7F7;
+    --ink: #0F1F1F;
+    --ink-2: #3F4F4F;
+    --ink-3: #6B7A7A;
+    --brand: #C21D24;
+    --band-bg: #0F1F1F;
+    --band: 650px;
+    --on-band: #FFFFFF;
+    --on-band-2: rgba(255,255,255,.72);
+    --on-band-line: rgba(255,255,255,.28);
+    --chip-bg: #FBE3E4;
+    --chip-ink: #9E1218;
+    --flow-bg: #E6EEEE;
+  }
+  .hero .h1 em { font-style: normal; color: #FF5A5F; }
+  .hero .ring { position: absolute; width: 360px; height: 360px; border: 60px solid rgba(210,35,42,.9); border-radius: 50%; left: -150px; top: 380px; }
+  .hero .dot { position: absolute; width: 150px; height: 150px; border-radius: 50%; background: #FFA729; right: 90px; top: 70px; }
+  .logo { position: absolute; left: 120px; top: 30px; height: 62px; border-radius: 8px; }
+  .foot img { height: 84px; margin: 0 auto 10px; }
+  .built { text-align: center; padding-top: 110px; }
+  .amber { --block: #FFA729; }
+  .red { --block: #D2232A; }
+  .slate { --block: #0F1F1F; }
+  .points { font-size: 30px; font-weight: 700; color: #0F1F1F; }
+  .plus { color: #1B8043; font-weight: 700; }
+  .bar { height: 8px; border-radius: 4px; background: #E2E8E8; overflow: hidden; margin-top: 10px; }
+  .bar i { display: block; height: 100%; width: 50%; background: #FFA729; }
+  .langs { display: flex; gap: 6px; margin-top: 10px; }
+  .langs span { padding: 6px 10px; border-radius: 6px; background: #F4F7F7; font-weight: 600; font-size: 13px; }
+  .langs span:first-child { background: #0F1F1F; color: #fff; }
+  .instructors { padding-top: 170px; }
+</style>
+</head>
+<body>
+
+<header class="hero" data-slice="hero">
+  <img class="logo" src="logo-red.png" alt="AERIX" />
+  <div class="ring"></div>
+  <div class="dot"></div>
+  <span class="pill">FERA TRAINING CENTER · LEARNING PLATFORM</span>
+  <h1 class="h1">Safety training, <em>anywhere</em><br />on the job.</h1>
+  <p class="lead">A mobile-first learning app for fire and workplace safety courses. Workers enrol, watch short lessons, track their progress and earn points, while instructors build and grade the courses.</p>
+  <div class="devices">
+    <div class="phone" style="--w:250px"><img src="screens/course_discovery.webp" alt="" /></div>
+    <div class="phone" style="--w:300px"><img src="screens/student_dashboard.webp" alt="" /></div>
+    <div class="phone" style="--w:250px"><img src="screens/course_player.webp" alt="" /></div>
+  </div>
+</header>
+
+<section class="built wrap">
+  <h2 class="h2">Built for people who learn between shifts</h2>
+</section>
+
+<section class="wrap feature" data-slice="catalogue">
+  <div class="stage red">
+    <div class="block"></div>
+    <div class="phone" style="--w:270px"><img src="screens/course_discovery.webp" alt="" /></div>
+    <div class="float" style="right:-10px;bottom:110px">
+      <div class="t">Filter courses</div>
+      <div class="chiplist">
+        <span class="chip">HRD Corp Claimable</span>
+        <span class="chip" style="background:#E6EEEE;color:#0F1F1F">Intermediate</span>
+        <span class="chip" style="background:#E6EEEE;color:#0F1F1F">Safety Certified</span>
+      </div>
+    </div>
+  </div>
+  <div class="copy">
+    <p class="eyebrow">Course catalogue</p>
+    <h2 class="h2">Find a course your employer can claim</h2>
+    <p class="lead">Search by topic and filter for HRD Corp claimable courses, level and certification. Each card shows the instructor, price and difficulty, so a worker can enrol in a couple of taps.</p>
+  </div>
+</section>
+
+<section class="wrap feature flip" data-slice="player">
+  <div class="stage slate">
+    <div class="block"></div>
+    <div class="phone" style="--w:270px"><img src="screens/course_player.webp" alt="" /></div>
+    <div class="float" style="left:20px;bottom:100px;min-width:260px">
+      <div class="t">Module 2 · Chemical Fire</div>
+      <div style="margin-top:8px;font-weight:600">2 of 4 lessons done</div>
+      <div class="bar"><i></i></div>
+    </div>
+  </div>
+  <div class="copy">
+    <p class="eyebrow">Course player</p>
+    <h2 class="h2">Pick up exactly where you stopped</h2>
+    <p class="lead">Short video lessons sit inside modules with their own quizzes and assignments. Learners mark a lesson complete, open the curriculum, or ask a question in Q&amp;A without leaving the video.</p>
+  </div>
+</section>
+
+<section class="wrap feature" data-slice="rewards">
+  <div class="stage amber">
+    <div class="block"></div>
+    <div class="phone" style="--w:270px"><img src="screens/points_rewards.webp" alt="" /></div>
+    <div class="float" style="right:-20px;bottom:150px">
+      <div class="t">Recent activity</div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px;font-weight:600"><span>Course complete</span><span class="plus">+50</span></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-weight:600"><span>Daily check-in</span><span class="plus">+5</span></div>
+    </div>
+  </div>
+  <div class="copy">
+    <p class="eyebrow" style="color:#A35F00">Points &amp; rewards</p>
+    <h2 class="h2">A reason to come back tomorrow</h2>
+    <p class="lead">Daily check-ins, finished courses and referrals all earn points. Learners can redeem them for safety gear vouchers and share a referral code with a colleague.</p>
+  </div>
+</section>
+
+<section class="flow wrap" data-slice="flow">
+  <p class="eyebrow">How it works</p>
+  <h2 class="h2" style="margin-top:14px">From sign-in to certificate</h2>
+  <p class="lead">Sign in, see what's next, find a course, learn, and collect points along the way.</p>
+  <div class="track">
+    <div class="step"><span class="tag">1 · Sign in</span><div class="phone" style="--w:190px"><img src="screens/auth_onboarding.webp" alt="" /></div></div>
+    <div class="step"><span class="tag">2 · Home</span><div class="phone" style="--w:190px"><img src="screens/student_dashboard.webp" alt="" /></div></div>
+    <div class="step"><span class="tag">3 · Browse</span><div class="phone" style="--w:190px"><img src="screens/course_discovery.webp" alt="" /></div></div>
+    <div class="step"><span class="tag">4 · Learn</span><div class="phone" style="--w:190px"><img src="screens/course_player.webp" alt="" /></div></div>
+    <div class="step"><span class="tag">5 · Earn</span><div class="phone" style="--w:190px"><img src="screens/points_rewards.webp" alt="" /></div></div>
+  </div>
+</section>
+
+<section class="anno wrap" data-slice="home" style="padding-bottom:0">
+  <p class="eyebrow">Home screen</p>
+  <h2 class="h2" style="margin-top:14px">Know what to do next</h2>
+  <div class="grid">
+    <div class="col left">
+      <div class="note"><b>Daily check-in</b><p>One tap claims today's points, right at the top.</p></div>
+      <div class="note"><b>Continue learning</b><p>The course in progress, its module and a single Resume button.</p></div>
+    </div>
+    <div class="phone" style="--w:330px;margin:0 60px"><img src="screens/student_dashboard.webp" alt="" /></div>
+    <div class="col right">
+      <div class="note"><b>Progress at a glance</b><p>Active enrolments, completed courses and total points.</p></div>
+      <div class="note"><b>Recommended for you</b><p>Courses picked for the learner's level, with time to finish.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="instructors wrap" data-slice="instructors">
+  <p class="eyebrow">For instructors</p>
+  <h2 class="h2" style="margin-top:14px">The other side of every course</h2>
+  <div class="cards">
+    <div class="card"><span class="n">01</span><b>Course builder</b><p>Basics, curriculum and settings in three tabs. Topics hold lessons, quizzes and assignments, and the description can start from an AI draft.</p></div>
+    <div class="card"><span class="n">02</span><b>Grading</b><p>Review assignment submissions and grade them in one place, with the learner's work next to the rubric.</p></div>
+    <div class="card"><span class="n">03</span><b>Cohorts</b><p>Group students into cohorts so a class moves through the same course together.</p></div>
+  </div>
+  <div class="card" style="margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:40px">
+    <div><b style="margin-top:0">Five languages</b><p>Layouts are built to stay balanced in English, Bengali, Spanish, French and Hindi, for a workforce that doesn't share one language.</p></div>
+    <div class="langs"><span>EN</span><span>বাংলা</span><span>ES</span><span>FR</span><span>हिन्दी</span></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <img src="logo.png" alt="AERIX — Learn. Everywhere. Anywhere." />
+  FERA Training Center
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "Nasrul Hidayat",
+  "shortName": "Nasrul",
+  "role": "Freelance Web & Mobile Developer",
+  "headline": ["Hi, I'm Nasrul.", "I build web and mobile apps."],
+  "intro": "Freelance web & mobile developer and Computer Science student at UPM. I build with Laravel, Vue and Flutter for clients — from the database to the screen in your hand.",
+  "photo": "/images/profile.jpg",
+  "photoCaption": "Based in Malaysia",
+  "location": "Kuala Lumpur",
+  "timezone": "Asia/Kuala_Lumpur",
+  "status": {
+    "show": true,
+    "label": "Available for freelance work"
+  },
+  "currentlyBuilding": "Project name — one line about what you're building now",
+  "email": "your.email@example.com",
+  "resume": "/files/nas-dev-resume.pdf",
+  "socials": [
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/your-handle" },
+    { "label": "GitHub", "url": "https://github.com/naaasruul" }
+  ],
+  "about": {
+    "paragraphs": [
+      "Placeholder bio, paragraph one — how you got into building software and what you enjoy about it.",
+      "Paragraph two — the kind of problems you like to solve, and the kind of clients and projects you take on as a freelancer."
+    ],
+    "facts": [
+      { "label": "Studying", "value": "Computer Science, UPM" },
+      { "label": "Based in", "value": "Malaysia" },
+      { "label": "Languages", "value": "English, Malay" },
+      { "label": "Open to", "value": "Freelance & contract projects" }
+    ]
+  },
+  "contactHeadline": ["Have a project in mind?", "Let's build it."]
+}
