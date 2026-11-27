@@ -230,45 +230,44 @@ const cursor = computed(() => {
       <rect x="374" y="459" width="50" height="4" rx="2" fill="#FFFFFF" />
 
       <!-- Far arm -->
-      <path d="M300 262 L326 306" stroke="#74472D" stroke-width="18" stroke-linecap="round" />
+      <path d="M300 262 L326 306" stroke="#1C2A66" stroke-width="19" stroke-linecap="round" />
       <g class="forearm far">
-        <path d="M326 306 L390 292" stroke="#74472D" stroke-width="15" stroke-linecap="round" />
-        <circle cx="394" cy="290" r="8.5" fill="#74472D" />
+        <path d="M326 306 L382 294" stroke="#1C2A66" stroke-width="16" stroke-linecap="round" />
+        <path d="M384 293 L390 292" stroke="#C68D65" stroke-width="11" stroke-linecap="round" />
+        <circle cx="394" cy="290" r="8.5" fill="#C68D65" />
       </g>
 
-      <!-- Torso: jersey -->
-      <path d="M262 246 Q290 234 318 250 Q330 282 324 308 L320 352 Q292 368 262 362 Q250 300 262 246 Z" fill="#1B2559" />
-      <path d="M262 246 Q252 300 262 362 L276 362 Q268 300 274 248 Z" fill="#FFFFFF" />
-      <path d="M300 238 L310 244 L296 300 L288 298 Z" fill="#F26A3D" />
-      <text x="278" y="342" font-family="Outfit Variable, sans-serif" font-weight="800" font-size="22" fill="#FFFFFF">20</text>
-      <rect x="262" y="350" width="60" height="10" rx="4" fill="#F26A3D" />
+      <!-- Torso: hoodie -->
+      <path d="M262 246 Q290 234 318 250 Q330 282 324 308 L320 352 Q292 368 262 362 Q250 300 262 246 Z" fill="#283A86" />
+      <path d="M258 252 Q254 228 276 224 Q296 222 306 236 Q290 232 276 238 Q266 244 266 258 Z" fill="#1C2A66" />
+      <path d="M272 320 Q296 314 318 320 L314 344 Q294 349 275 345 Z" fill="#1C2A66" />
+      <path d="M300 246 L298 276 M309 249 L308 272" stroke="#FFFDF8" stroke-width="2.2" stroke-linecap="round" />
+      <circle cx="298" cy="278" r="2.2" fill="#FFFDF8" /><circle cx="308" cy="274" r="2.2" fill="#FFFDF8" />
+      <rect x="262" y="350" width="60" height="10" rx="4" fill="#1C2A66" />
 
       <!-- Head (tilts up while thinking) -->
       <g class="head">
-        <rect x="279" y="220" width="16" height="26" rx="6" fill="#74472D" />
-        <circle cx="292" cy="196" r="31" fill="#8B5A3C" />
-        <path d="M321 190 Q328 196 322 202" fill="#8B5A3C" />
-        <ellipse cx="279" cy="200" rx="6" ry="8" fill="#74472D" />
+        <rect x="279" y="220" width="16" height="26" rx="6" fill="#C68D65" />
+        <circle cx="292" cy="196" r="31" fill="#DDA77F" />
+        <path d="M321 190 Q328 196 322 202" fill="#DDA77F" />
+        <ellipse cx="279" cy="200" rx="6" ry="8" fill="#C68D65" />
         <g class="eyes">
           <ellipse class="eye" cx="309" cy="192" rx="2.6" ry="3.4" fill="#1B1210" />
           <path d="M303 183 Q309 180 314 183" stroke="#2A1D19" stroke-width="2.2" fill="none" stroke-linecap="round" />
         </g>
-        <path class="mouth" d="M303 210 Q310 215 316 209" stroke="#3B2117" stroke-width="2.2" fill="none" stroke-linecap="round" />
-        <g fill="#2A1D19">
-          <circle cx="268" cy="206" r="9" /><circle cx="262" cy="192" r="12" /><circle cx="265" cy="176" r="12" />
-          <circle cx="276" cy="166" r="13" /><circle cx="292" cy="161" r="13" /><circle cx="307" cy="164" r="12" />
-          <circle cx="318" cy="172" r="9" /><circle cx="276" cy="186" r="9" /><circle cx="285" cy="176" r="10" />
-          <circle cx="300" cy="173" r="9" />
-        </g>
+        <path class="mouth" d="M303 210 Q310 215 316 209" stroke="#7A3E2A" stroke-width="2.2" fill="none" stroke-linecap="round" />
+        <!-- Hair: short, lightly wavy -->
+        <path d="M262 208 Q252 196 258 184 Q252 172 264 168 Q264 156 278 158 Q284 148 296 154 Q306 148 314 156 Q326 156 325 168 Q332 176 324 182 Q318 178 312 180 Q316 188 310 191 Q302 182 292 186 Q284 188 282 196 Q281 202 280 204 Q274 196 270 198 Q267 206 270 214 Z" fill="#1E1611" />
+        <path d="M268 176 Q276 168 284 172 M290 164 Q298 158 306 164 M308 172 Q316 168 320 174" stroke="#3B2D23" stroke-width="2" fill="none" stroke-linecap="round" />
       </g>
 
       <!-- Near arm -->
-      <path d="M308 268 L340 314" stroke="#8B5A3C" stroke-width="19" stroke-linecap="round" />
-      <path d="M304 258 L318 282" stroke="#1B2559" stroke-width="24" stroke-linecap="round" />
-      <path d="M314 276 L322 290" stroke="#F26A3D" stroke-width="24" stroke-linecap="butt" />
+      <path d="M304 258 L340 314" stroke="#283A86" stroke-width="22" stroke-linecap="round" />
       <g class="forearm near">
-        <path d="M340 314 L408 294" stroke="#8B5A3C" stroke-width="16" stroke-linecap="round" />
-        <circle cx="412" cy="292" r="9" fill="#8B5A3C" />
+        <path d="M340 314 L398 297" stroke="#283A86" stroke-width="18" stroke-linecap="round" />
+        <path d="M396 298 L402 296" stroke="#1C2A66" stroke-width="18" stroke-linecap="butt" />
+        <path d="M404 295 L408 294" stroke="#DDA77F" stroke-width="12" stroke-linecap="round" />
+        <circle cx="412" cy="292" r="9" fill="#DDA77F" />
       </g>
     </g>
 

@@ -1,9 +1,9 @@
 {
-  "name": "Nasrul Hidayat",
+  "name": "Nas",
   "shortName": "Nasrul",
   "role": "Freelance Web & Mobile Developer",
   "headline": ["Hi, I'm Nasrul.", "I build web and mobile apps."],
-  "intro": "Freelance web & mobile developer and Computer Science student at UPM. I build with Laravel, Vue and Flutter for clients — from the database to the screen in your hand.",
+  "intro": "Freelance web & mobile developer. I build a system that helps your business — from the database to the screen in your hand.",
   "photo": "/images/profile.jpg",
   "photoCaption": "Based in Malaysia",
   "location": "Kuala Lumpur",
@@ -12,8 +12,8 @@
     "show": true,
     "label": "Available for freelance work"
   },
-  "currentlyBuilding": "Project name — one line about what you're building now",
-  "email": "your.email@example.com",
+  "currentlyBuilding": "Malaysia Sign Language — Learning app for learn Malaysian Sign Language (MSL) through videos, quizzes and flashcards.",
+  "email": "nasrulhaqhidayat@gmail.com",
   "resume": "/files/nas-dev-resume.pdf",
   "socials": [
     { "label": "LinkedIn", "url": "https://www.linkedin.com/in/your-handle" },
